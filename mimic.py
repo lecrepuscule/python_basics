@@ -43,12 +43,24 @@ columns, so the output looks better.
 
 import random
 import sys
+import re
 
 
 def mimic_dict(filename):
   """Returns mimic dict mapping each word to list of words which follow it."""
   # +++your code here+++
-  return
+  f = open(filename, "rU")
+  all_text = f.read()
+  print "all text: " + all_text
+  all_words = all_text.split()
+  print "all_words" + str(all_words)
+  mimic_dictionary = {}
+  for word in all_words:
+    if not mimic_dictionary.has_key(word):
+      next_words = re.findall(r"\s{1}" + word + r"\s{1}(\w+)\s{1}", all_text)
+      mimic_dictionary[word] = next_words
+  print mimic_dictionary
+  return mimic_dictionary
 
 
 def print_mimic(mimic_dict, word):
@@ -64,7 +76,7 @@ def main():
     sys.exit(1)
 
   dict = mimic_dict(sys.argv[1])
-  print_mimic(dict, '')
+  # print_mimic(dict, '')
 
 
 if __name__ == '__main__':
